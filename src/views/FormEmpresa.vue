@@ -2,7 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md12>
-        <material-card color="green" title="Editar Empresa" text="Complete los datos">
+        <material-card color="green" title="Editar Empresa" text="Complete los datos ">
           <v-form>
             <v-container py-0>
               <v-layout wrap>
@@ -14,6 +14,7 @@
                   <v-text-field v-model="nombre" label="Razon Social" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
+                
                 <v-flex xs12 md4>
                   <v-text-field v-model="email" label="Direccion de Email" class="purple-input"
                     :rules="[rules.required, rules.email]" type="email" />
@@ -57,7 +58,7 @@
   export default {
     data() {
       return {
-
+        empresa: null,
         
         cuit: "30303030301",
         nombre: "EMPRESA TEST S.A.",
@@ -87,14 +88,18 @@
       }
     },
     mounted() {
+      axios
+        .get('http://localhost:3700/api/empresa/5cf853fb0df6935975621385')
+        .then(response => (this.empresa = response.data))
+      /*
       axios({
         method: "GET",
-        "url": "http://localhost:3700/api/empresa/listar"
+        "url": "http://localhost:3700/api/empresa/5cf853fb0df6935975621385"
       }).then(result => {
         this.items = result.data.empresas;
       }, error => {
         console.error(error);
-      });
+      });*/
     }
 
   }

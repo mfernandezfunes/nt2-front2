@@ -29,7 +29,7 @@
                   <v-select v-model="genero" :items="generos" label="Genero" required></v-select>
                 </v-flex>
                 <v-flex xs12 md4>
-                  cxzcz
+                 
                 </v-flex>
                 <v-flex xs12 md4>
                   <v-text-field v-model="fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
@@ -40,7 +40,7 @@
                     :rules="[rules.required, rules.email]" />
                 </v-flex>
                 <v-flex xs12 md12>
-                  fdsf
+                  
                 </v-flex>
                 <v-flex xs12 md6>
                   <v-btn class="mx-0 font-weight-light" @click="navigateBack()" color="danger">
@@ -117,7 +117,7 @@
         visita: null,
 
         dni: "30303030301",
-        nombre: "EMPRESA TEST S.A.",
+        nombre: "Nahir Jara",
         apellido: "PERSE",
         fechaNac: null,
         email: "test@gmail.com",
@@ -140,20 +140,12 @@
       }
     },
     mounted() {
-      /*axios({
-        method: "GET",
-        "url": "http://localhost:3700/api/persona/5cf5b47b92c70c03cd240cc3"
-      }).then(result => {
-        this.persona = result.data;
-      }, error => {
-        console.error(error);
-      });*/
       axios
         .get('http://localhost:3700/api/persona/5cf5b47b92c70c03cd240cc3')
         .then(response => (this.persona = response.data))
-      axios
+      /*axios
         .get('http://localhost:3700/api/visita')
-        .then(response => (this.visita = response.data))
+        .then(response => (this.visita = response.data))*/
     },
 
     methods: {

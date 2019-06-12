@@ -26,7 +26,7 @@
                   path: '/empresa-form',
                   name: 'Editar Empresa',
                   view: 'EmpresaForm',
-                  params: { id:'{{item._id}}' } 
+                  query: { id: item._id } 
                 })" small round>
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>

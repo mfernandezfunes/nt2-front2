@@ -23,7 +23,7 @@
                   path: '/persona-form',
                   name: 'Editar Persona',
                   view: 'PersonaForm',
-                  params: { id:'{{ item._id }}'}})" small round>
+                  query: { id: item._id } })" small round>
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
 
@@ -91,7 +91,7 @@
     },
     mounted() {
       axios
-        .get('http://localhost:3700/api/persona/listar')
+        .get('http://localhost:3700/api/persona')
         .then(response => (this.items = response.data.personas))
         .catch(error => {
           errored = true
