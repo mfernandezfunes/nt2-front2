@@ -3,8 +3,7 @@
  * for more information on routes, see the
  * official documentation https://router.vuejs.org/en/
  */
-export default [
-  {
+export default [{
     path: '/login',
     name: 'Log-In de Usuario',
     view: 'Login'
@@ -45,6 +44,22 @@ export default [
     name: 'Editar Persona',
     view: 'FormPersona'
   },
+  {
+    path: '/visitaRegistrar',
+    name: 'Registrar Visita',
+    view: 'FormVisitaRegistrar'
+  },
+  {
+    path: '/visitaListar',
+    name: 'Listar Visitas',
+    view: 'ListaVisitas'
+  },
+  {
+    path: '/visitaListarOpen',
+    name: 'Listar Visitas Abiertas',
+    view: 'ListaVisitasOpen'
+  },
+
   {
     path: '/webcam',
     name: 'Tomar Foto',

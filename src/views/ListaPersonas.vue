@@ -18,7 +18,9 @@
                 <v-switch v-model="item.activo"></v-switch>
               </td>
               <td>
-
+                <v-btn color="info" @click="ingresoVisita" small round>
+                  <v-icon>mdi-clock-in</v-icon> ENTRADA
+                </v-btn>
                 <v-btn color="success" @click="$router.push( {
                   path: '/persona-form',
                   name: 'Editar Persona',
@@ -87,7 +89,10 @@
         )
 
         //alert(`PERSONA A BORRAR idObjeto: ${item._id}`)
-      }
+      },
+      ingresoVisita: function (item) {
+        alert(`PERSONA A EDITAR idObjeto: ${item._id}`)
+      },
     },
     mounted() {
       axios

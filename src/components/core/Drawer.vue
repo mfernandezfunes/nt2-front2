@@ -53,18 +53,28 @@
           text: 'Personas'
         },
         {
+          to: '/visitaListarOpen',
+          icon: 'mdi-clock',
+          text: 'Visitas Abiertas'
+        },
+        {
+          to: '/visitaListar',
+          icon: 'mdi-clock',
+          text: 'Visitas'
+        },
+        {
           to: '/webcam',
           icon: 'mdi-webcam',
           text: 'Tomar Foto'
         },
         {
           to: '/login',
-          icon: 'mdi-webcam',
+          icon: 'mdi-account-key',
           text: 'LogIn de Usuario'
         },
         {
           to: '/register',
-          icon: 'mdi-webcam',
+          icon: 'mdi-account-plus',
           text: 'Registrar Usuario'
         }
         /*,
