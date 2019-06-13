@@ -4,18 +4,13 @@
       <v-flex md12>
         <material-card :active-class="color" title="Empresas" text="Administracion de Empresas">
           <v-data-table :headers="headers" :items="items" hide-actions>
-
-            <template v-if="errored">
-              <p>We're sorry, we're not able to retrieve this information at the momento, please try again later.</p>
-            </template>
-
             <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />
             </template>
 
             <template slot="items" slot-scope="{ item }">
               <td>{{ item.cuit }}</td>
-              <td>{{ item.nombre }}</td>
+              <td>{{ item.nombre }}</td>s
               <td>{{ item.piso }}</td>
               <td>{{ item.oficina }}</td>
               <td>
@@ -88,7 +83,13 @@
         alert(`EMPRESA A EDITAR idObjeto: ${item._id}`)
       },
       eliminarEmpresa: function (item) {
-        alert(`EMPRESA A BORRAR idObjeto: ${item._id}`)
+        Swal.fire({
+          title: 'Error!',
+          text: 'Do you want to continue',
+          type: 'error',
+          confirmButtonText: 'Cool'
+        })
+        // alert(`EMPRESA A BORRAR idObjeto: ${item._id}`)
       }
     },
     mounted() {

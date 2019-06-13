@@ -4,6 +4,7 @@ import Vue from 'vue'
 
 // Components
 import './components'
+import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js'
 
 // Plugins
 import './plugins'

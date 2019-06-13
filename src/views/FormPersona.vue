@@ -13,34 +13,34 @@
                   </v-avatar>
                 </v-flex>
                 <v-flex xs12 md9>
-                  <v-text-field v-model="dni" label="DNI" disabled :rules="[rules.required]" />
+                  <v-text-field v-model="form.dni" label="DNI" disabled :rules="[rules.required]" />
                 </v-flex>
 
                 <v-flex xs12 md6>
-                  <v-text-field v-model="nombre" label="Nombre" counter="50" class="purple-input"
+                  <v-text-field v-model="form.nombre" label="Nombre" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-text-field v-model="apellido" label="Apellido" counter="50" class="purple-input"
+                  <v-text-field v-model="form.apellido" label="Apellido" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
 
                 <v-flex xs12 md4>
-                  <v-select v-model="genero" :items="generos" label="Genero" required></v-select>
+                  <v-select v-model="form.genero" :items="generos" label="Genero" required></v-select>
                 </v-flex>
                 <v-flex xs12 md4>
-                 
+
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
+                  <v-text-field v-model="form.fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-text-field v-model="email" label="Direccion de Email" type="email" class="purple-input"
+                  <v-text-field v-model="form.email" label="Direccion de Email" type="email" class="purple-input"
                     :rules="[rules.required, rules.email]" />
                 </v-flex>
                 <v-flex xs12 md12>
-                  
+
                 </v-flex>
                 <v-flex xs12 md6>
                   <v-btn class="mx-0 font-weight-light" @click="navigateBack()" color="danger">
@@ -116,9 +116,11 @@
         persona: null,
         visita: null,
 
+        personaId: null,
+
         dni: "30303030301",
-        nombre: "Nahir Jara",
-        apellido: "PERSE",
+        nombre: "Nahir ",
+        apellido: "Jara",
         fechaNac: null,
         email: "test@gmail.com",
         activa: true,
@@ -140,17 +142,20 @@
       }
     },
     mounted() {
-      axios
-        .get('http://localhost:3700/api/persona/5cf5b47b92c70c03cd240cc3')
-        .then(response => (this.persona = response.data))
-      /*axios
+      this.personaId = this.$route.query.id
+      if (this.personaId) {
+        axios
+          .get(`http://localhost:3700/api/persona/${this.personaId}`)
+          .then(response => (this.persona = response.data))
+      }
+      /*axios // Listar ultimas 10 visitas
         .get('http://localhost:3700/api/visita')
         .then(response => (this.visita = response.data))*/
     },
 
     methods: {
       navigateBack() {
-        this.router.go(-1);
+        $this.router.go(-1);
       },
       actualizarPersona: function () {
         alert(`PERSONA A ACTUALIZAR idObjeto:`)

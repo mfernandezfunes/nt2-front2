@@ -2,38 +2,36 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md12>
-        <material-card color="green" title="Editar Empresa" text="Complete los datos ">
+        <material-card color="green" title="Editar Empresa">
           <v-form>
             <v-container py-0>
               <v-layout wrap>
                 <v-flex xs12 md10>
-                  <v-text-field v-model="cuit" label="CUIT" disabled />
+                  <v-text-field v-model="form.cuit" label="CUIT" disabled />
                 </v-flex>
-
+                <v-flex xs12 md2>
+                  <v-switch v-model="form.activa" label="Activa"></v-switch>
+                </v-flex>
                 <v-flex xs12 md12>
-                  <v-text-field v-model="nombre" label="Razon Social" counter="50" class="purple-input"
+                  <v-text-field v-model="form.nombre" label="Razon Social" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
-                
+
                 <v-flex xs12 md4>
-                  <v-text-field v-model="email" label="Direccion de Email" class="purple-input"
+                  <v-text-field v-model="form.email" label="Direccion de Email" class="purple-input"
                     :rules="[rules.required, rules.email]" type="email" />
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="piso" label="Piso" class="purple-input" :rules="[rules.required]" />
+                  <v-text-field v-model="form.piso" label="Piso" class="purple-input" :rules="[rules.required]" />
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="oficina" label="Oficina" class="purple-input" :rules="[rules.required]" />
+                  <v-text-field v-model="form.oficina" label="Oficina" class="purple-input" :rules="[rules.required]" />
                 </v-flex>
-
                 <v-flex xs12>
-                  <v-textarea class="purple-input" label="Observaciones" value="" />
+                  <v-textarea v-model="form.observaciones" class="purple-input" label="Observaciones" value="" />
                 </v-flex>
-
-
-
                 <v-flex xs12 md6>
-                  <v-btn class="mx-0 font-weight-light" @click="this.$router.go(-1)" color="danger">
+                  <v-btn class="mx-0 font-weight-light" @click="goBack()" color="danger">
                     Cancelar
                   </v-btn>
                 </v-flex>
@@ -58,14 +56,18 @@
   export default {
     data() {
       return {
-        empresa: null,
-        
-        cuit: "30303030301",
-        nombre: "EMPRESA TEST S.A.",
-        piso: 2,
-        oficina: "201",
-        email: "test@gmail.com",
-        activo: true,
+        empresaObj: null,
+        form: {
+          cuit: "30303030301",
+          nombre: "EMPRESA TES.A.",
+          piso: 2,
+          oficina: "201",
+          email: "test@gmail.com",
+          activo: true,
+        },
+
+        empresaId: null,
+
 
         rules: {
           required: value => !!value || 'Este campo es Requerido.',
@@ -81,26 +83,28 @@
     },
     methods: {
       actualizarEmpresa: function () {
-        alert(`EMPRESA A ACTUALIZAR idObjeto:`)
+        alert(`EMPRESA A ACTUALIZAR idObjeto: ${this.empresaId}`)
       },
       crearEmpresa: function () {
-        alert(`EMPRESA A CREAR idObjeto: `)
+        alert(`EMPRESA A CREAR idObjeto: ${this.empresaId}`)
+      },
+      goBack() {
+        window.history.length > 1 ?
+          this.$router.go(-1) :
+          this.$router.push('/')
       }
     },
     mounted() {
-      axios
-        .get('http://localhost:3700/api/empresa/5cf853fb0df6935975621385')
-        .then(response => (this.empresa = response.data))
-      /*
-      axios({
-        method: "GET",
-        "url": "http://localhost:3700/api/empresa/5cf853fb0df6935975621385"
-      }).then(result => {
-        this.items = result.data.empresas;
-      }, error => {
-        console.error(error);
-      });*/
+      this.empresaId = this.$route.query.id
+      if (this.empresaId != null) {
+        console.log(this.empresaId)
+        axios
+          .get(`http://localhost:3700/api/empresa/${this.empresaId}`)
+          .then(response => {
+            this.form = response.data.empresa
+            console.log(this.form)
+          })
+      }
     }
-
   }
 </script>

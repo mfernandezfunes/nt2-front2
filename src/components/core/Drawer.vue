@@ -48,19 +48,9 @@
           text: 'Empresas'
         },
         {
-          to: '/empresa-form',
-          icon: 'mdi-domain',
-          text: 'Editar Empresa'
-        },
-        {
           to: '/lista-personas',
           icon: 'mdi-account',
           text: 'Personas'
-        },
-        {
-          to: '/persona-form',
-          icon: 'mdi-account',
-          text: 'Editar Persona'
         },
         {
           to: '/webcam',
