@@ -116,14 +116,17 @@
         persona: null,
         visita: null,
 
-        personaId: null,
+        form: {
+          dni:"",
+          nombre:"",
+          apellido:"",
+          fechaNac:"",
+          oficina:"",
+          observaciones:"",
+          activo:""
+        },
 
-        dni: "30303030301",
-        nombre: "Nahir ",
-        apellido: "Jara",
-        fechaNac: null,
-        email: "test@gmail.com",
-        activa: true,
+        personaId: null,
 
         generos: [
           'MASCULINO',
@@ -144,9 +147,10 @@
     mounted() {
       this.personaId = this.$route.query.id
       if (this.personaId) {
-        axios
+       /* axios
           .get(`http://localhost:3700/api/persona/${this.personaId}`)
           .then(response => (this.persona = response.data))
+          .catch( error => alert(error))*/
       }
       /*axios // Listar ultimas 10 visitas
         .get('http://localhost:3700/api/visita')

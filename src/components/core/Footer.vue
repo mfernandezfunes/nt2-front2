@@ -19,17 +19,10 @@
 <script>
   export default {
     data: () => ({
-      links: [{
-          name: 'Principal',
-          Link: '/dashboard'
-        },
+      links: [
         {
           name: 'Acerca de Nosotros',
-          Link: 'https://'
-        },
-        {
-          name: 'Blog',
-          Link: 'https://'
+          Link: '/login'
         }
       ]
     })

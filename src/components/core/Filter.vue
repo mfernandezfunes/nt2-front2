@@ -12,7 +12,7 @@
 
             <v-layout justify-center>
               <v-avatar v-for="c in colors" :key="c" :class="[c === color ? 'color-active color-' + c: 'color-' + c]"
-                size="23" @click="setColor(c)" />
+                size="35" @click="setColor(c)" />
             </v-layout>
             <v-divider class="mt-3" />
           </v-flex>
@@ -43,7 +43,8 @@
         'info',
         'success',
         'warning',
-        'danger'
+        'danger',
+        'lime'
       ],
       images: [
         'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-1.23832d31.jpg',

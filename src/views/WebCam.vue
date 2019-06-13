@@ -22,14 +22,12 @@
 
           <v-flex xs12 md12>
             <v-toolbar dense>
-              <v-btn color="indigo" @click="onCapture">CAPTURAR <v-icon right dark>mdi-camera</v-icon>
-              </v-btn>
-              <v-btn color="danger" @click="onStop">PARAR <v-icon right dark>mdi-stop</v-icon>
-              </v-btn>
-              <v-btn color="success" @click="onStart">INICIAR <v-icon right dark>mdi-play</v-icon>
-              </v-btn>
+              <v-btn color="indigo" @click="onCapture">CAPTURAR <v-icon right dark>mdi-camera</v-icon></v-btn>
+              <v-btn color="danger" @click="onStop">PARAR <v-icon right dark>mdi-stop</v-icon></v-btn>
+              <v-btn color="success" @click="onStart">INICIAR <v-icon right dark>mdi-play</v-icon></v-btn>
             </v-toolbar>
           </v-flex>
+          
         </div>
       </div>
 

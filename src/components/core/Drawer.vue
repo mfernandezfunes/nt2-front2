@@ -56,6 +56,16 @@
           to: '/webcam',
           icon: 'mdi-webcam',
           text: 'Tomar Foto'
+        },
+        {
+          to: '/login',
+          icon: 'mdi-webcam',
+          text: 'LogIn de Usuario'
+        },
+        {
+          to: '/register',
+          icon: 'mdi-webcam',
+          text: 'Registrar Usuario'
         }
         /*,
                 {

@@ -2,7 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
-        <material-card :active-class="color" title="Empresas" text="Administracion de Empresas">
+        <material-card title="Empresas" text="Administracion de Empresas">
           <v-data-table :headers="headers" :items="items" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />

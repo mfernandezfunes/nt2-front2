@@ -58,16 +58,16 @@
       return {
         empresaObj: null,
         form: {
-          cuit: "30303030301",
-          nombre: "EMPRESA TES.A.",
-          piso: 2,
-          oficina: "201",
-          email: "test@gmail.com",
-          activo: true,
+          cuit:"",
+          nombre:"",
+          email:"",
+          piso:"",
+          oficina:"",
+          observaciones:"",
+          activa: ""
         },
 
         empresaId: null,
-
 
         rules: {
           required: value => !!value || 'Este campo es Requerido.',
@@ -78,7 +78,6 @@
             return pattern.test(value) || 'Direccion de email invalida.'
           }
         },
-
       }
     },
     methods: {
@@ -97,13 +96,12 @@
     mounted() {
       this.empresaId = this.$route.query.id
       if (this.empresaId != null) {
-        console.log(this.empresaId)
         axios
           .get(`http://localhost:3700/api/empresa/${this.empresaId}`)
           .then(response => {
             this.form = response.data.empresa
-            console.log(this.form)
           })
+          .catch( error => alert(error))
       }
     }
   }

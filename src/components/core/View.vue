@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <div id="core-view">
-      <v-fade-transition mode="out-in">
+      <v-fade-transition mode="out-in" duration="15">
         <router-view />
       </v-fade-transition>
     </div>

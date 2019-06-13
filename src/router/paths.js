@@ -5,6 +5,16 @@
  */
 export default [
   {
+    path: '/login',
+    name: 'Log-In de Usuario',
+    view: 'Login'
+  },
+  {
+    path: '/register',
+    name: 'Registro de Usuario',
+    view: 'Register'
+  },
+  {
     path: '/dashboard',
     // Relative to /src/views
     name: 'Panel de Control',
