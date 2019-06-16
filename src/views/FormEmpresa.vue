@@ -36,7 +36,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarEmpresa()" color="success">
+                  <v-btn class="mx-0 font-weight-light" @click="actualizarEmpresa(form)" color="success">
                     Actualizar
                   </v-btn>
                 </v-flex>
@@ -97,7 +97,7 @@
       this.empresaId = this.$route.query.id
       if (this.empresaId != null) {
         axios
-          .get(`http://localhost:3700/api/empresa/${this.empresaId}`)
+          .get(`${process.env.VUE_APP_ROOT_API}/empresa/${this.empresaId}`)
           .then(response => {
             this.form = response.data.empresa
           })

@@ -43,12 +43,12 @@
 
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-btn class="mx-0 font-weight-light" @click="navigateBack()" color="danger">
+                  <v-btn class="mx-0 font-weight-light" @click="goBack" color="danger">
                     Cancelar
                   </v-btn>
                 </v-flex>
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona()" color="success">
+                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(form)" color="success">
                     Actualizar
                   </v-btn>
                 </v-flex>
@@ -115,16 +115,16 @@
     data() {
       return {
         persona: null,
-        visita: null,
 
         form: {
-          dni:"",
-          nombre:"",
-          apellido:"",
-          fechaNac:"",
-          oficina:"",
-          observaciones:"",
-          activo:""
+          dni: "",
+          nombre: "",
+          apellido: "",
+          genero:"",
+          fechaNac: "",
+          oficina: "",
+          observaciones: "",
+          activo: ""
         },
 
         personaId: null,
@@ -147,26 +147,29 @@
     },
     mounted() {
       this.personaId = this.$route.query.id
-      if (this.personaId) {
-       /* axios
-          .get(`http://localhost:3700/api/persona/${this.personaId}`)
-          .then(response => (this.persona = response.data))
-          .catch( error => alert(error))*/
+      console.log(this.$route.query.id)
+      if (this.personaId != null) {
+        axios
+          .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
+          .then(response => {
+            this.form = response.data.persona
+            console.log(this.persona)
+          })
+          .catch(error => alert(error))
       }
-      /*axios // Listar ultimas 10 visitas
-        .get('http://localhost:3700/api/visita')
-        .then(response => (this.visita = response.data))*/
     },
 
     methods: {
-      navigateBack() {
-        $this.router.go(-1);
+      goBack() {
+        window.history.length > 1 ?
+          this.$router.go(-1) :
+          this.$router.push('/')
       },
       actualizarPersona: function () {
-        alert(`PERSONA A ACTUALIZAR idObjeto:`)
+        alert(`PERSONA A ACTUALIZAR idObjeto: ${this.personaId}`)
       },
       crearPersona: function () {
-        alert(`PERSONA A CREAR idObjeto: `)
+        alert(`PERSONA A CREAR idObjeto: ${this.personaId}`)
       }
     }
   }

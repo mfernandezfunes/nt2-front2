@@ -4,7 +4,6 @@ import Vue from 'vue'
 
 // Components
 import './components'
-import Swal from '../node_modules/sweetalert2/dist/sweetalert2.js'
 
 // Plugins
 import './plugins'
@@ -18,6 +17,7 @@ import i18n from '@/i18n'
 import router from '@/router'
 import store from '@/store'
 
+import Swal from 'sweetalert2'
 
 // Sync store with router
 sync(store, router)
@@ -29,5 +29,6 @@ new Vue({
   i18n,
   router,
   store,
+  Swal,
   render: h => h(App)
 }).$mount('#app')

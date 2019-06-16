@@ -13,8 +13,8 @@
 
               <td>{{ item.idPersona }}</td>
               <td>{{ item.idEmpresa }}</td>
-              <td>{{ item.fechaEntrada }}</td>
-              <td>{{ item.fechaSalida }}</td>
+              <td class = "text-info"><v-icon class = "text-info">mdi-clock-in</v-icon>{{ formatDate(item.fechaEntrada) }}</td>
+              <td class = "text-warning"><v-icon class = "text-warning">mdi-clock-out</v-icon>{{ formatDate(item.fechaSalida) }}</td>
               <td>{{ item.numeroTarjeta }}</td>
               
             </template>
@@ -28,6 +28,7 @@
 
 <script>
   import axios from "axios";
+  import Swal from 'sweetalert2';
   export default {
     data: () => ({
       headers: [{
@@ -68,12 +69,16 @@
           'success'
         )
         //alert(`PERSONA A BORRAR idObjeto: ${item._id}`)
+      },
+      formatDate: function (date) {
+        let registered = new Date(date);
+        return registered.toLocaleString('es-ES');
       }
     },
 
     mounted() {
       axios
-        .get('http://localhost:3700/api/visita')
+        .get(`${process.env.VUE_APP_ROOT_API}/visita`)
         .then(response => (this.items = response.data.visitas))
         .catch(error => {
           errored = true

@@ -3,8 +3,22 @@
     <v-layout justify-center wrap>
       <v-flex md12>
         <material-card color="green" title="Personas" text="Administracion de personas">
-          <v-data-table :headers="headers" :items="items" hide-actions>
+          <v-container fill-height>
+            <v-flex md8></v-flex>
+            <v-flex md4>
+              <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" hide-details>
+              </v-text-field>
+            </v-flex>
+          </v-container>
 
+          <v-data-table :headers="headers" :items="items" rows-per-page-text="Registros por pagina:"
+            prev-icon="mdi-menu-left" next-icon="mdi-menu-right" sort-icon="mdi-menu-down">
+
+            <template v-slot:no-data>
+              <v-alert :value="true" color="error" icon="mdi-warning">
+                Los sentimos, no se han encontrado registros :(
+              </v-alert>
+            </template>
             <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />
             </template>
@@ -13,12 +27,12 @@
               <td>{{ item.dni }}</td>
               <td>{{ item.nombre }}</td>
               <td>{{ item.apellido }}</td>
-              <td>{{ item.fechaNac }}</td>
+              <td>{{ formatDate(item.fechaNac) }}</td>
               <td>
                 <v-switch v-model="item.activo"></v-switch>
               </td>
               <td>
-                <v-btn color="info" @click="ingresoVisita" small round>
+                <v-btn color="info" @click="ingresoVisita(item)" small round>
                   <v-icon>mdi-clock-in</v-icon> ENTRADA
                 </v-btn>
                 <v-btn color="success" @click="$router.push( {
@@ -45,6 +59,7 @@
 
 <script>
   import axios from "axios";
+  import Swal from 'sweetalert2';
   export default {
     data: () => ({
       headers: [{
@@ -74,6 +89,9 @@
         }
       ],
       items: [],
+      search: '',
+      filter: {},
+
       errored: false
     }),
 
@@ -93,14 +111,21 @@
       ingresoVisita: function (item) {
         alert(`PERSONA A EDITAR idObjeto: ${item._id}`)
       },
+      formatDate(date) {
+        let registered = new Date(date);
+        return registered.toLocaleString('es-ES');
+      }
     },
     mounted() {
       axios
-        .get('http://localhost:3700/api/persona')
+        .get(`${process.env.VUE_APP_ROOT_API}/persona`)
         .then(response => (this.items = response.data.personas))
         .catch(error => {
-          errored = true
-          console.log(error)
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: `${error}`,
+          })
         })
     }
   }

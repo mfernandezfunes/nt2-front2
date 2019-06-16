@@ -102,7 +102,7 @@
         console.error(error);
       });*/
       axios
-        .get('http://localhost:3700/api/empresa/listar')
+        .get(`${process.env.VUE_APP_ROOT_API}/empresa/listar`)
         .then(response => (this.items = response.data.empresas))
         .catch(error => {
           errored = true
