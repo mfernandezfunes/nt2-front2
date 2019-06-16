@@ -54,30 +54,6 @@ Let us know your thoughts below. And good luck with development!
 * [Licensing](#licensing)
 * [Useful Links](#useful-links)
 
-
-## Versions
-
-
-
-Vuetify | Vue | React | Angular | HTML |
-| --- | --- | --- | --- | --- |
-| [![Vuetify Material Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/100/original/opt_md_vuetify_thumbnail.jpg)](https://www.creative-tim.com/product/vuetify-material-dashboard-pro) | [![Vue Material Dashboard](https://s3.amazonaws.com/creativetim_bucket/products/81/original/opt_md_vue_thumbnail.jpg)](https://www.creative-tim.com/product/vue-material-dashboard) | [![Material Dashboard React](https://s3.amazonaws.com/creativetim_bucket/products/71/original/opt_mdr_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-react)  | [![Material Dashboard Angular](https://s3.amazonaws.com/creativetim_bucket/products/53/original/opt_md_angular_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-angular2) | [![Material Dashboard HTML](https://s3.amazonaws.com/creativetim_bucket/products/50/original/opt_md_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard)
-
-## Demo
-
-- [Start page](https://demos.creative-tim.com/vuetify-material-dashboard)
-- [Notifications page](https://demos.creative-tim.com/vuetify-material-dashboard/#/notifications)
-
-[View More](https://demos.creative-tim.com/vue-material-dashboard-pro).
-
-
-## Quick start
-
-Quick start options:
-
-- Download from [Creative Tim](https://www.creative-tim.com/product/vuetify-material-dashboard)
-
-
 ## Documentation
 The documentation for the Vuetify Material Dashboard is hosted at our [website](https://demos.creative-tim.com/vuetify-material-dashboard/documentation).
 
