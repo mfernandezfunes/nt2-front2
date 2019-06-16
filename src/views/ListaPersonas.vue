@@ -43,10 +43,12 @@
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
 
-                <v-btn color="danger" @click="eliminarPersona(item)" small round>
+                <v-btn color="danger" @click="eliminarPersona(item)" small round disabled>
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
-
+                <v-btn color="info" @click="tomarFoto(item)" small round>
+                  <v-icon>mdi-camera</v-icon>
+                </v-btn>
               </td>
             </template>
           </v-data-table>
@@ -94,7 +96,6 @@
 
       errored: false
     }),
-
     methods: {
       editarPersona: function (item) {
         alert(`PERSONA A EDITAR idObjeto: ${item._id}`)
@@ -107,6 +108,13 @@
         )
 
         //alert(`PERSONA A BORRAR idObjeto: ${item._id}`)
+      },
+      tomarFoto: function (persona) {
+        this.$router.push( {
+                  path: '/webbam',
+                  name: 'Tomar Foto',
+                  view: 'WebCam',
+                  query: { id: persona._id } })
       },
       ingresoVisita: function (item) {
         alert(`PERSONA A EDITAR idObjeto: ${item._id}`)

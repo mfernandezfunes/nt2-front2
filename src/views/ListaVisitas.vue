@@ -15,7 +15,7 @@
               <td>{{ item.idEmpresa }}</td>
               <td class = "text-info"><v-icon class = "text-info">mdi-clock-in</v-icon>{{ formatDate(item.fechaEntrada) }}</td>
               <td class = "text-warning"><v-icon class = "text-warning">mdi-clock-out</v-icon>{{ formatDate(item.fechaSalida) }}</td>
-              <td>{{ item.numeroTarjeta }}</td>
+              <td><v-icon>mdi-qrcode</v-icon> {{ item.numeroTarjeta }}</td>
               
             </template>
           </v-data-table>
@@ -58,7 +58,6 @@
         }
       ],
       items: [],
-      errored: false
     }),
 
     methods: {
@@ -81,7 +80,6 @@
         .get(`${process.env.VUE_APP_ROOT_API}/visita`)
         .then(response => (this.items = response.data.visitas))
         .catch(error => {
-          errored = true
           console.log(error)
         })
     }

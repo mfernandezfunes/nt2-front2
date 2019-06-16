@@ -184,6 +184,7 @@
 </template>
 
 <script>
+  import axios from "axios";
   export default {
     data() {
       return {
@@ -301,7 +302,7 @@
     mounted() {
       axios({
         method: "GET",
-        "url": "http://localhost:8000/api/stats/visits/today"
+        "url": `${process.env.VUE_APP_ROOT_API}/stats/visits/today`
       }).then(result => {
         this.visitasHoy = result.data.cantidad;
       }, error => {

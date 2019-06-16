@@ -44,7 +44,7 @@
   import Swal from 'sweetalert2';
   export default {
     data: () => ({
-      componentKey: 0,
+
       headers: [{
           sortable: false,
           text: 'ID Persona',
@@ -66,27 +66,14 @@
           value: 'numeroTarjeta'
         }
       ],
-      items: [],
-      errored: false
+      items: []
     }),
 
     methods: {
-      recargar: function () {
-        axios
-          .get(`${process.env.VUE_APP_ROOT_API}/visita/open`)
-          .then(response => (this.items = response.data.visitas))
-          .catch(error => {
-            errored = true
-            console.log(error)
-          })
-      },
-
       salidaVisita: function (item) {
         axios
           .put(`${process.env.VUE_APP_ROOT_API}/visita/${item._id}/close`)
           .then(response => {
-
-            if (response.status === 200) {
               Swal.fire({
                 type: 'success',
                 title: 'Se ha registrado la Salida',
@@ -94,13 +81,13 @@
                 timer: 1500
               })
               this.items.splice(this.items.indexOf(item) , 1)
-            }
           })
           .catch(err => {
             Swal.fire({
               type: 'error',
               title: 'Oops...',
               text: 'Algo salio mal!',
+              footer: err
             })
           })
       },
@@ -109,7 +96,6 @@
         return registered.toLocaleString('es-ES');
       }
     },
-
     mounted() {
       axios
         .get(`${process.env.VUE_APP_ROOT_API}/visita/open`)

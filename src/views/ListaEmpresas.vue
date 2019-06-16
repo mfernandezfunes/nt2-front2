@@ -26,7 +26,7 @@
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
 
-                <v-btn color="danger" @click="eliminarEmpresa(item)" small round>
+                <v-btn color="danger" @click="eliminarEmpresa(item)" small round disabled>
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
 
@@ -93,19 +93,11 @@
       }
     },
     mounted() {
-      /*axios({
-        method: "GET",
-        "url": "http://localhost:3700/api/empresa/listar"
-      }).then(result => {
-        this.items = result.data.empresas;
-      }, error => {
-        console.error(error);
-      });*/
       axios
         .get(`${process.env.VUE_APP_ROOT_API}/empresa/listar`)
         .then(response => (this.items = response.data.empresas))
         .catch(error => {
-          errored = true
+          
           console.log(error)
         })
     }

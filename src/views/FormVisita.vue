@@ -2,47 +2,41 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md9>
-        <material-card color="green" title="Editar Persona" text="Complete los datos">
+        <material-card color="green" title="Registrar" text="Complete los datos">
           <v-form>
             <v-container py-0>
               <v-layout wrap>
 
                 <v-flex xs12 md3>
                   <v-avatar slot="offset" class="mx-auto d-block" size="100">
-
-                    <img data-original="persona.image" v-bind:src="img" class="lazy" alt="">
-
+                    <img src="../../public/img/99999999.jpg">
                   </v-avatar>
                 </v-flex>
                 <v-flex xs12 md9>
-                  <v-text-field v-model="persona.dni" label="DNI" disabled :rules="[rules.required]" />
+                  <v-text-field v-model="form.dni" label="DNI" disabled :rules="[rules.required]" />
                 </v-flex>
 
                 <v-flex xs12 md6>
-                  <v-text-field v-model="persona.nombre" label="Nombre" counter="50" class="purple-input"
+                  <v-text-field v-model="form.nombre" label="Nombre" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-text-field v-model="persona.apellido" label="Apellido" counter="50" class="purple-input"
+                  <v-text-field v-model="form.apellido" label="Apellido" counter="50" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
 
                 <v-flex xs12 md4>
-                  <v-select v-model="persona.genero" :items="generos" label="Genero" required></v-select>
+                  <v-select v-model="form.genero" :items="generos" label="Genero" required></v-select>
                 </v-flex>
                 <v-flex xs12 md4>
-                  <select v-model="persona.genero">
-                    <option v-for="genero in generos" v-bind:value="genero.code" :selected="selectedOption(genero)">
-                      {{ genero.name }}
-                    </option>
-                  </select>
+
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="persona.fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
+                  <v-text-field v-model="form.fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
                     :rules="[rules.required]" />
                 </v-flex>
                 <v-flex xs12 md6>
-                  <v-text-field v-model="persona.email" label="Direccion de Email" type="email" class="purple-input"
+                  <v-text-field v-model="form.email" label="Direccion de Email" type="email" class="purple-input"
                     :rules="[rules.required, rules.email]" />
                 </v-flex>
                 <v-flex xs12 md12>
@@ -54,7 +48,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(persona)" color="success">
+                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(form)" color="success">
                     Actualizar
                   </v-btn>
                 </v-flex>
@@ -101,34 +95,25 @@
   export default {
     data() {
       return {
-        personaId: null,
+        persona: null,
 
-        persona: {
+        form: {
           dni: "",
           nombre: "",
           apellido: "",
-          genero: "",
+          genero:"",
           fechaNac: "",
           oficina: "",
           observaciones: "",
-          image: "",
           activo: ""
         },
 
-        img: require('../../public/img/persona.png'),
+        personaId: null,
 
-        options: [{
-            name: "MASCULINO",
-            code: "MASCULINO",
-          },
-          {
-            name: "FEMENINO",
-            code: "FEMENINO",
-          },
-          {
-            name: "OTRO",
-            code: "OTRO",
-          }
+        generos: [
+          'MASCULINO',
+          'FEMENINO',
+          'OTRO'
         ],
         rules: {
           required: value => !!value || 'Este campo es Requerido.',
@@ -143,11 +128,13 @@
     },
     mounted() {
       this.personaId = this.$route.query.id
+      console.log(this.$route.query.id)
       if (this.personaId != null) {
         axios
           .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
           .then(response => {
-            this.persona = response.data.persona
+            this.form = response.data.persona
+            console.log(this.persona)
           })
           .catch(error => alert(error))
       }
@@ -159,23 +146,17 @@
           this.$router.go(-1) :
           this.$router.push('/')
       },
-      selectedOption(option) {
-        if (this.value) {
-          return option.code === this.value.code;
-        }
-        return false;
-      },
       actualizarPersona: function (persona) {
         axios
           .put(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`, persona)
           .then(response => {
-            Swal.fire({
-              type: 'success',
-              title: 'Se ha actualizado',
-              showConfirmButton: false,
-              timer: 1500
-            })
-            goBack()
+              Swal.fire({
+                type: 'success',
+                title: 'Se ha actualizado',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              goBack()
           })
           .catch(err => {
             Swal.fire({

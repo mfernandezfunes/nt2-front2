@@ -18,6 +18,7 @@ import router from '@/router'
 import store from '@/store'
 
 import Swal from 'sweetalert2'
+import axios from "axios";
 
 // Sync store with router
 sync(store, router)
@@ -29,6 +30,7 @@ new Vue({
   i18n,
   router,
   store,
+  axios,
   Swal,
   render: h => h(App)
 }).$mount('#app')
