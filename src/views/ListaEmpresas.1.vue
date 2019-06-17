@@ -3,28 +3,14 @@
     <v-layout justify-center wrap>
       <v-flex md12>
         <material-card title="Empresas" text="Administracion de Empresas">
-
-          <v-card>
-            <v-card-title>
-              <v-layout justify-center wrap>
-                <v-flex md5>
-                </v-flex>
-                <v-flex md5>
-                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Filtrar" single-line hide-details>
-                  </v-text-field>
-                </v-flex>
-              </v-layout>
-            </v-card-title>
-          </v-card>
-
-          <v-data-table :headers="headers" :items="items" :search="filters" :custom-filter="customFilter">
+          <v-data-table :headers="headers" :items="items" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />
             </template>
 
             <template slot="items" slot-scope="{ item }">
               <td>{{ item.cuit }}</td>
-              <td>{{ item.nombre }}</td>
+              <td>{{ item.nombre }}</td>s
               <td>{{ item.piso }}</td>
               <td>{{ item.oficina }}</td>
               <td>
@@ -93,8 +79,6 @@
       items: [],
       errored: true
     }),
-
-    computed: {},
     methods: {
       editarEmpresa: function (item) {
         alert(`EMPRESA A EDITAR idObjeto: ${item._id}`)
@@ -114,6 +98,7 @@
         .get(`${process.env.VUE_APP_ROOT_API}/empresa/listar`)
         .then(response => (this.items = response.data.empresas))
         .catch(error => {
+          
           console.log(error)
         })
     }

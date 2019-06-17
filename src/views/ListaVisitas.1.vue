@@ -3,40 +3,6 @@
     <v-layout justify-center wrap>
       <v-flex md12>
         <material-card color="green" title="Visitas" text="Listado de visitas realizadas">
-
-
-          <!--desde aca
-          <v-flex xs3>
-              <v-text-field  label="Filter" single-line hide-details @input="filterSearch">
-              </v-text-field>
-            </v-flex>
-            <v-flex xs3>
-              <v-select :items="authors" label="Author" @change="filterAuthor"></v-select>
-            </v-flex>
-  
-            <v-flex xs3>
-  
-              <v-menu ref="show_start_date" :close-on-content-click="false" v-model="show_start_date" :nudge-right="40"
-                :return-value.sync="start_date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field slot="activator" v-model="start_date" label="From" prepend-icon="event" readonly>
-                </v-text-field>
-                <v-date-picker v-model="start_date" @input="filterStartDate"></v-date-picker>
-  
-              </v-menu>
-  
-            </v-flex>
-  
-            <v-flex xs3>
-              <v-menu ref="show_end_date" :close-on-content-click="false" v-model="show_end_date" :nudge-right="40"
-                :return-value.sync="end_date" lazy transition="scale-transition" offset-y full-width min-width="290px">
-                <v-text-field slot="activator" v-model="end_date" label="To" prepend-icon="event" readonly></v-text-field>
-                <v-date-picker v-model="end_date" @input="filterEndDate"></v-date-picker>
-  
-              </v-menu>
-            </v-flex>
-  
-            HASTA ACA-->
-
           <v-data-table :headers="headers" :items="items" hide-actions>
 
             <template slot="headerCell" slot-scope="{ header }">

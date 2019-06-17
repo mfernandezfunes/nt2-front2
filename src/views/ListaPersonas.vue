@@ -3,16 +3,27 @@
     <v-layout justify-center wrap>
       <v-flex md12>
         <material-card color="green" title="Personas" text="Administracion de personas">
+
+            <v-btn v-show="!hidden" color="pink"  @click="nuevaPersona()" dark absolute top right fab>
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+
           <v-container fill-height>
-            <v-flex md8></v-flex>
-            <v-flex md4>
+        
+            <v-flex md3>
+           
+              <v-select label="Filtrar" :items=filtroAct :hint="`${select.title}, ${select.value}`" v-model="select"
+                item-text="title" item-value="value" persistent-hint return-object single-line>
+              </v-select>
+
+            </v-flex>
+            <v-flex md9>
               <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" hide-details>
               </v-text-field>
             </v-flex>
           </v-container>
 
-          <v-data-table :headers="headers" :items="items" rows-per-page-text="Registros por pagina:"
-            prev-icon="mdi-menu-left" next-icon="mdi-menu-right" sort-icon="mdi-menu-down">
+          <v-data-table :headers="headers" :items="items" rows-per-page-text="Registros por pagina:">
 
             <template v-slot:no-data>
               <v-alert :value="true" color="error" icon="mdi-warning">
@@ -35,14 +46,9 @@
                 <v-btn color="info" @click="ingresoVisita(item)" small round>
                   <v-icon>mdi-clock-in</v-icon> ENTRADA
                 </v-btn>
-                <v-btn color="success" @click="$router.push( {
-                  path: '/persona-form',
-                  name: 'Editar Persona',
-                  view: 'PersonaForm',
-                  query: { id: item._id } })" small round>
+                <v-btn color="success" @click="editarPersona(item)" small round>
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-
                 <v-btn color="danger" @click="eliminarPersona(item)" small round disabled>
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
@@ -93,12 +99,38 @@
       items: [],
       search: '',
       filter: {},
-
-      errored: false
+      select: {
+        title: 'Activado',
+        value: true
+      },
+      filtroAct: [{
+        title: 'Activado',
+        value: true
+      }, {
+        title: 'Desactivado',
+        value: false
+      }]
     }),
     methods: {
+      nuevaPersona: function (item) {
+        this.$router.push({
+          path: '/persona-form',
+          name: 'Nueva Persona',
+          view: 'FormPersona',
+          query: {
+            action: 'new'
+          }
+        })
+      },
       editarPersona: function (item) {
-        alert(`PERSONA A EDITAR idObjeto: ${item._id}`)
+        this.$router.push({
+          path: '/persona-form',
+          name: 'Editar Persona',
+          view: 'FormPersona',
+          query: {
+            id: item._id
+          }
+        })
       },
       eliminarPersona: function (item) {
         Swal.fire(
@@ -106,18 +138,26 @@
           'You clicked the button!',
           'success'
         )
-
-        //alert(`PERSONA A BORRAR idObjeto: ${item._id}`)
       },
       tomarFoto: function (persona) {
-        this.$router.push( {
-                  path: '/webbam',
-                  name: 'Tomar Foto',
-                  view: 'WebCam',
-                  query: { id: persona._id } })
+        this.$router.push({
+          path: '/webbam',
+          name: 'Tomar Foto',
+          view: 'WebCam',
+          query: {
+            id: persona._id
+          }
+        })
       },
       ingresoVisita: function (item) {
-        alert(`PERSONA A EDITAR idObjeto: ${item._id}`)
+        this.$router.push({
+          path: '/visita-form',
+          name: 'Registrar Visita',
+          view: 'FormVisita',
+          query: {
+            id: item._id
+          }
+        })
       },
       formatDate(date) {
         let registered = new Date(date);

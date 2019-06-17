@@ -1,56 +1,51 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
-      <v-flex xs12 md9>
-        <material-card color="green" title="Registrar" text="Complete los datos">
+      <v-flex xs12 md12>
+        <material-card color="green" title="Registrar" text="Complete los datos necesarios para registrar la visita">
           <v-form>
             <v-container py-0>
               <v-layout wrap>
-
-                <v-flex xs12 md3>
-                  <v-avatar slot="offset" class="mx-auto d-block" size="100">
-                    <img src="../../public/img/99999999.jpg">
-                  </v-avatar>
+                <v-flex xs12 md8>
+                  <h3>PERSONA QUE INGRESA </h3>
                 </v-flex>
-                <v-flex xs12 md9>
-                  <v-text-field v-model="form.dni" label="DNI" disabled :rules="[rules.required]" />
-                </v-flex>
-
-                <v-flex xs12 md6>
-                  <v-text-field v-model="form.nombre" label="Nombre" counter="50" class="purple-input"
-                    :rules="[rules.required]" />
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-text-field v-model="form.apellido" label="Apellido" counter="50" class="purple-input"
-                    :rules="[rules.required]" />
+                <v-flex xs12 md4>
+                  <h4><v-icon class="text-info">mdi-clock-in</v-icon>{{formatDate(new Date())}}</h4>
                 </v-flex>
 
                 <v-flex xs12 md4>
-                  <v-select v-model="form.genero" :items="generos" label="Genero" required></v-select>
+                  <v-text-field v-model="form.dni" label="DNI" class="purple-input" disabled />
                 </v-flex>
                 <v-flex xs12 md4>
-
+                  <v-text-field v-model="form.nombre" label="nombre" class="purple-input" disabled />
                 </v-flex>
                 <v-flex xs12 md4>
-                  <v-text-field v-model="form.fechaNac" label="Fecha de Nacimiento" type="date" class="purple-input"
-                    :rules="[rules.required]" />
-                </v-flex>
-                <v-flex xs12 md6>
-                  <v-text-field v-model="form.email" label="Direccion de Email" type="email" class="purple-input"
-                    :rules="[rules.required, rules.email]" />
+                  <v-text-field v-model="form.apellido" label="Apellido" class="purple-input" disabled />
                 </v-flex>
                 <v-flex xs12 md12>
-
+                  <v-textarea solo name="input-7-4" label="Observaciones" value="">
+                  </v-textarea>
                 </v-flex>
+                <v-flex xs12 md12>
+                  <h3 class="font-weight-light mb-4">EMPRESA QUE VISITA</h3>
+                </v-flex>
+                <v-flex xs12 md12>
+                  <v-select label="Empresa" :items=empresasSelect :hint="`${empresaId.title}, ${empresaId.value}`"
+                    v-model="empresaId" item-text="title" item-value="value" persistent-hint return-object single-line>
+                  </v-select>
+                </v-flex>
+
                 <v-flex xs12 md6>
                   <v-btn class="mx-0 font-weight-light" @click="goBack" color="danger">
                     Cancelar
                   </v-btn>
                 </v-flex>
+
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(form)" color="success">
-                    Actualizar
+                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(form)" color="info">
+                    REGISTRAR INGRESO
                   </v-btn>
+
                 </v-flex>
 
               </v-layout>
@@ -59,13 +54,6 @@
         </material-card>
       </v-flex>
 
-      <v-flex xs12 md3>
-        <material-card color="green" title="Ubicacion">
-          <iframe id="gmap_canvas" width="100%" height="500"
-            src="https://maps.google.com/maps?q=google&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="1"
-            scrolling="no" marginheight="5" marginwidth="5" />
-        </material-card>
-      </v-flex>
 
     </v-layout>
   </v-container>
@@ -96,48 +84,42 @@
     data() {
       return {
         persona: null,
-
-        form: {
-          dni: "",
-          nombre: "",
-          apellido: "",
-          genero:"",
-          fechaNac: "",
-          oficina: "",
-          observaciones: "",
-          activo: ""
-        },
-
+        form: {},
         personaId: null,
-
-        generos: [
-          'MASCULINO',
-          'FEMENINO',
-          'OTRO'
-        ],
-        rules: {
-          required: value => !!value || 'Este campo es Requerido.',
-          counter: value => value.length <= 50 || 'Maximo 50 caracteres',
-          email: value => {
-            const pattern =
-              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Direccion de email invalida.'
-          }
+        empresaId: {
+          title:'',
+          value: ''
         },
+
+        empresas: [],
+        empresasSelect: [],
+
       }
     },
     mounted() {
+
       this.personaId = this.$route.query.id
+
       console.log(this.$route.query.id)
       if (this.personaId != null) {
         axios
           .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
           .then(response => {
             this.form = response.data.persona
-            console.log(this.persona)
+            console.log(this.form)
+            axios
+              .get(`${process.env.VUE_APP_ROOT_API}/empresa/listar`)
+              .then(response => {
+                this.empresas = response.data.empresas
+                this.generarSelect()
+              })
+              .catch(error => {
+                console.log(error)
+              })
           })
           .catch(error => alert(error))
       }
+
     },
 
     methods: {
@@ -150,13 +132,13 @@
         axios
           .put(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`, persona)
           .then(response => {
-              Swal.fire({
-                type: 'success',
-                title: 'Se ha actualizado',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              goBack()
+            Swal.fire({
+              type: 'success',
+              title: 'Se ha actualizado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            goBack()
           })
           .catch(err => {
             Swal.fire({
@@ -166,10 +148,23 @@
               footer: err
             })
           })
-
       },
       crearPersona: function () {
         alert(`PERSONA A CREAR idObjeto: ${this.personaId}`)
+      },
+      generarSelect: function () {
+        for (const empresa of this.empresas) {
+          let opcion = `{title:'${empresa.nombre}',value:'${empresa._id}'}`
+          console.log(opcion)
+          this.empresasSelect.push(opcion)
+        }
+      },
+      formatDate(date) {
+        let registered = new Date(date);
+        return registered.toLocaleString('es-ES');
+      },
+      registrarVisita: function () {
+
       }
     }
   }

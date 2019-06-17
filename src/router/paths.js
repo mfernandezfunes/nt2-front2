@@ -45,9 +45,9 @@ export default [{
     view: 'FormPersona'
   },
   {
-    path: '/visitaRegistrar',
+    path: '/visita-form',
     name: 'Registrar Visita',
-    view: 'FormVisitaRegistrar'
+    view: 'FormVisita'
   },
   {
     path: '/visitaListar',

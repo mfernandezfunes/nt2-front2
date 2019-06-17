@@ -5,7 +5,7 @@
       <v-layout class="fill-height" tag="v-list" column>
         <v-list-tile avatar>
           <v-list-tile-avatar color="gray">
-            <v-img :src="logo" height="34" contain />
+            <v-img :src="logo" height="80" contain />
           </v-list-tile-avatar>
           <v-list-tile-title class="title">
             Control Visitas
@@ -61,11 +61,6 @@
           to: '/visitaListar',
           icon: 'mdi-clock',
           text: 'Visitas'
-        },
-        {
-          to: '/webcam',
-          icon: 'mdi-webcam',
-          text: 'Tomar Foto'
         },
         {
           to: '/login',

@@ -65,14 +65,6 @@
         </material-card>
       </v-flex>
 
-      <v-flex xs12 md3>
-        <material-card color="green" title="Ubicacion">
-          <iframe id="gmap_canvas" width="100%" height="500"
-            src="https://maps.google.com/maps?q=google&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="1"
-            scrolling="no" marginheight="5" marginwidth="5" />
-        </material-card>
-      </v-flex>
-
     </v-layout>
   </v-container>
 
@@ -148,6 +140,8 @@
           .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
           .then(response => {
             this.persona = response.data.persona
+            if (this.persona.image != null) // me fijo que si viene la imagen la cargo, sino dejo grafico vacio
+              this.img = `${process.env.VUE_APP_ROOT_PICS}/${this.persona.image}`
           })
           .catch(error => alert(error))
       }
