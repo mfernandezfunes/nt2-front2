@@ -9,7 +9,7 @@
               <v-layout justify-center wrap>
                 <v-flex md5>
                 </v-flex>
-                <v-flex md5>
+                <v-flex md12>
                   <v-text-field v-model="search" append-icon="mdi-magnify" label="Filtrar" single-line hide-details>
                   </v-text-field>
                 </v-flex>
@@ -17,8 +17,11 @@
             </v-card-title>
           </v-card>
 
-          <v-data-table :headers="headers" :items="items" :search="filters" :custom-filter="customFilter">
-            <template slot="headerCell" slot-scope="{ header }">
+          <v-data-table :headers="headers" :items="items" :search="search" 
+          rows-per-page-text="Registros por página:" 
+          no-results-text="No se han encontrado registros coincidentes">
+            
+          <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />
             </template>
 
@@ -28,7 +31,7 @@
               <td>{{ item.piso }}</td>
               <td>{{ item.oficina }}</td>
               <td>
-                <v-switch v-model="item.activa"></v-switch>
+                <v-switch v-model="item.activa" @change="cambiarEstado(item)"></v-switch>
               </td>
               <td>
                 <v-btn color="success" @click="$router.push( {
@@ -91,13 +94,35 @@
         }
       ],
       items: [],
-      errored: true
+      search: '',
     }),
 
-    computed: {},
+    computed: {
+      
+    },
     methods: {
       editarEmpresa: function (item) {
         alert(`EMPRESA A EDITAR idObjeto: ${item._id}`)
+      },
+      cambiarEstado(item){
+        console.log(item.cuit + item.activa + item._id)
+        axios
+        .put(`${process.env.VUE_APP_ROOT_API}/empresa/${item._id}`, {"activa":item.activa} )
+          .then(response => {
+              Swal.fire({
+                type: 'success',
+                title: `Se ha cambiado el estado de ${item.cuit} `,
+                showConfirmButton: true
+              })
+          })
+          .catch(err => {
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Algo salio mal!',
+              footer: err
+            })
+          })
       },
       eliminarEmpresa: function (item) {
         Swal.fire({
@@ -106,7 +131,6 @@
           type: 'error',
           confirmButtonText: 'Cool'
         })
-        // alert(`EMPRESA A BORRAR idObjeto: ${item._id}`)
       }
     },
     mounted() {

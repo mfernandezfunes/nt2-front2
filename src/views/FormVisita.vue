@@ -10,7 +10,9 @@
                   <h3>PERSONA QUE INGRESA </h3>
                 </v-flex>
                 <v-flex xs12 md4>
-                  <h4><v-icon class="text-info">mdi-clock-in</v-icon>{{formatDate(new Date())}}</h4>
+                  <h4>
+                    <v-icon class="text-info">mdi-clock-in</v-icon>{{formatDate(new Date())}}
+                  </h4>
                 </v-flex>
 
                 <v-flex xs12 md4>
@@ -42,7 +44,7 @@
                 </v-flex>
 
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(form)" color="info">
+                  <v-btn class="mx-0 font-weight-light" @click="registrarVisita(form)" color="info">
                     REGISTRAR INGRESO
                   </v-btn>
 
@@ -87,7 +89,7 @@
         form: {},
         personaId: null,
         empresaId: {
-          title:'',
+          title: '',
           value: ''
         },
 
@@ -154,9 +156,7 @@
       },
       generarSelect: function () {
         for (const empresa of this.empresas) {
-          let opcion = `{title:'${empresa.nombre}',value:'${empresa._id}'}`
-          console.log(opcion)
-          this.empresasSelect.push(opcion)
+          this.empresasSelect.push(`{title:'${empresa.nombre}',value:'${empresa._id}'}`)
         }
       },
       formatDate(date) {
@@ -164,7 +164,12 @@
         return registered.toLocaleString('es-ES');
       },
       registrarVisita: function () {
-
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Esta funcionalidad no esta disponible!',
+          footer: 'PROXIMAMENTE'
+        })
       }
     }
   }

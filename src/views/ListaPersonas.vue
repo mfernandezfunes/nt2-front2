@@ -4,26 +4,22 @@
       <v-flex md12>
         <material-card color="green" title="Personas" text="Administracion de personas">
 
-            <v-btn v-show="!hidden" color="pink"  @click="nuevaPersona()" dark absolute top right fab>
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-
-          <v-container fill-height>
-        
-            <v-flex md3>
-           
-              <v-select label="Filtrar" :items=filtroAct :hint="`${select.title}, ${select.value}`" v-model="select"
-                item-text="title" item-value="value" persistent-hint return-object single-line>
-              </v-select>
-
-            </v-flex>
-            <v-flex md9>
-              <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" hide-details>
-              </v-text-field>
-            </v-flex>
-          </v-container>
-
-          <v-data-table :headers="headers" :items="items" rows-per-page-text="Registros por pagina:">
+          <v-btn  color="pink" @click="nuevaPersona()" dark absolute top right fab>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <v-card>
+            <v-card-title>
+              <v-layout justify-center wrap>
+                <v-flex md5>
+                </v-flex>
+                <v-flex md12>
+                  <v-text-field v-model="search" append-icon="mdi-magnify" label="Filtrar" single-line hide-details>
+                  </v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-card-title>
+          </v-card>
+          <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Registros por pagina:">
 
             <template v-slot:no-data>
               <v-alert :value="true" color="error" icon="mdi-warning">
@@ -97,19 +93,7 @@
         }
       ],
       items: [],
-      search: '',
-      filter: {},
-      select: {
-        title: 'Activado',
-        value: true
-      },
-      filtroAct: [{
-        title: 'Activado',
-        value: true
-      }, {
-        title: 'Desactivado',
-        value: false
-      }]
+      search: ''
     }),
     methods: {
       nuevaPersona: function (item) {

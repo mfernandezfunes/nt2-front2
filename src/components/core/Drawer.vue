@@ -60,8 +60,8 @@
         {
           to: '/visitaListar',
           icon: 'mdi-clock',
-          text: 'Visitas'
-        },
+          text: 'Listado de Visitas'
+        }/*,
         {
           to: '/login',
           icon: 'mdi-account-key',
@@ -71,8 +71,7 @@
           to: '/register',
           icon: 'mdi-account-plus',
           text: 'Registrar Usuario'
-        }
-        /*,
+        },
                 {
                   to: '/user-profile',
                   icon: 'mdi-account',
