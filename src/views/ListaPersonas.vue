@@ -96,14 +96,14 @@
       search: ''
     }),
     methods: {
-      nuevaPersona: function (item) {
+      nuevaPersona: function () {
         this.$router.push({
-          path: '/persona-form',
-          name: 'Nueva Persona',
-          view: 'FormPersona',
-          query: {
+          path: '/persona-new',
+          name: 'Crear Persona',
+          view: 'FormPersonaNew',
+          /*query: {
             action: 'new'
-          }
+          }*/
         })
       },
       editarPersona: function (item) {

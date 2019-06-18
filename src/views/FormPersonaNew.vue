@@ -2,7 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex xs12 md9>
-        <material-card color="green" title="Editar Persona" text="Complete los datos">
+        <material-card color="green" title="Nueva Persona" text="Complete los datos">
           <v-form>
             <v-container py-0>
               <v-layout wrap>
@@ -15,7 +15,7 @@
                   </v-avatar>
                 </v-flex>
                 <v-flex xs12 md9>
-                  <v-text-field v-model="persona.dni" label="DNI" disabled :rules="[rules.required]" />
+                  <v-text-field v-model="persona.dni" label="DNI" :rules="[rules.required]" />
                 </v-flex>
 
                 <v-flex xs12 md6>
@@ -28,11 +28,11 @@
                 </v-flex>
 
                 <v-flex xs12 md4>
-                  <v-select v-model="persona.genero" :items="options" label="Genero" item-text="name"
-                    :selected="selectedOption(persona.genero)" required single-line></v-select>
-
+                  <v-select v-model="persona.genero" :items="generos" label="Genero" item-text="name" required
+                    single-line></v-select>
                 </v-flex>
                 <v-flex xs12 md4>
+
 
                 </v-flex>
                 <v-flex xs12 md4>
@@ -52,8 +52,8 @@
                   </v-btn>
                 </v-flex>
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="actualizarPersona(persona)" color="success">
-                    Actualizar
+                  <v-btn class="mx-0 font-weight-light" @click="crearPersona(persona)" color="success">
+                    Crear
                   </v-btn>
                 </v-flex>
 
@@ -91,23 +91,17 @@
   export default {
     data() {
       return {
-        personaId: null,
-
         persona: {
           dni: "",
           nombre: "",
           apellido: "",
+          email: "",
           genero: "",
           fechaNac: "",
-          oficina: "",
-          observaciones: "",
-          image: "",
-          activo: ""
+          activo: true
         },
-
         img: require('../../public/img/persona.png'),
-
-        options: [{
+        generos: [{
             name: "MASCULINO",
             code: "MASCULINO",
           },
@@ -132,17 +126,7 @@
       }
     },
     mounted() {
-      this.personaId = this.$route.query.id
-      if (this.personaId != null) {
-        axios
-          .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
-          .then(response => {
-            this.persona = response.data.persona
-            if (this.persona.image != null) // me fijo que si viene la imagen la cargo, sino dejo grafico vacio
-              this.img = `${process.env.VUE_APP_ROOT_PICS}/${this.persona.image}`
-          })
-          .catch(error => alert(error))
-      }
+
     },
 
     methods: {
@@ -151,33 +135,44 @@
           this.$router.go(-1) :
           this.$router.push('/')
       },
+      validarPersona() {
+        return !((this.persona.dni == '') || ( this.persona.nombre == '') || ( this.persona.apellido == '') || ( this.persona.fechaNac ==
+          '') || (this.persona.email == ''))
+      },
       selectedOption(option) {
         if (this.value) {
           return option.code === this.value.code;
         }
         return false;
       },
-      actualizarPersona: function (persona) {
-        axios
-          .put(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`, persona)
-          .then(response => {
-            Swal.fire({
-              type: 'success',
-              title: 'Se ha actualizado',
-              showConfirmButton: false,
-              timer: 1500,
-              footer: response
-            });
-            //goBack();
-          })
-          .catch(err => {
-            Swal.fire({
-              type: 'error',
-              title: 'Oops...',
-              text: 'Algo salio mal!',
-              footer: err
+      crearPersona: function (persona) {
+
+        if (this.validarPersona()) {
+          axios
+            .post(`${process.env.VUE_APP_ROOT_API}/persona`, persona)
+            .then(response => {
+              Swal.fire({
+                type: 'success',
+                title: 'Se ha ingresado la Persona',
+                showConfirmButton: false,
+                timer: 1500,
+                footer: `${response.data.persona._id}`
+              })
             })
+            .catch(err => {
+              
+              console.log(err.response.data)
+              
+            })
+          console.log(persona)
+        } else {
+          Swal.fire({
+            type: 'warning',
+            title: 'Se han omitido datos',
+            showConfirmButton: false,
+            timer: 1500
           })
+        }
       }
     }
   }

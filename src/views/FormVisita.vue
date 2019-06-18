@@ -29,11 +29,11 @@
                   </v-textarea>
                 </v-flex>
                 <v-flex xs12 md12>
-                  <h3 class="font-weight-light mb-4">EMPRESA QUE VISITA</h3>
+                  <h3 class="font-weight-light mb-4">EMPRESA QUE VA A VISITAR</h3>
                 </v-flex>
                 <v-flex xs12 md12>
-                  <v-select label="Empresa" :items=empresasSelect :hint="`${empresaId.title}, ${empresaId.value}`"
-                    v-model="empresaId" item-text="title" item-value="value" persistent-hint return-object single-line>
+                  <v-select label="Seleccione la Empresa" :items=empresasSelect :hint="`${empresaId.title}, ${empresaId.value}`"
+                    v-model="empresaId" item-text="title" item-value="value" persistent-hint >
                   </v-select>
                 </v-flex>
 
@@ -150,9 +150,6 @@
               footer: err
             })
           })
-      },
-      crearPersona: function () {
-        alert(`PERSONA A CREAR idObjeto: ${this.personaId}`)
       },
       generarSelect: function () {
         for (const empresa of this.empresas) {

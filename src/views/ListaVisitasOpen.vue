@@ -8,9 +8,9 @@
             <v-layout row wrap>
               <v-flex v-for="item in items" :key="item.title" v-bind="{ [`xs3`]: true }">
                 <v-card>
-                  <v-img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu27wk3_oDOChw-qJK0jlkVDBI5mpHACLGpERvB4xQXVa1U0-a0g"
-                    height="150px">
+                  <v-img src="http://localhost:3700/static/web-6adce4d7.jpg" height="150px">
+                    <div class="fill-height bottom-gradient"></div>
+              
                   </v-img>
                   <v-card-title primary-title>
                     <div>{{ item.idPersona }}</div>
@@ -74,13 +74,13 @@
         axios
           .put(`${process.env.VUE_APP_ROOT_API}/visita/${item._id}/close`)
           .then(response => {
-              Swal.fire({
-                type: 'success',
-                title: 'Se ha registrado la Salida',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              this.items.splice(this.items.indexOf(item) , 1)
+            Swal.fire({
+              type: 'success',
+              title: 'Se ha registrado la Salida',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            this.items.splice(this.items.indexOf(item), 1)
           })
           .catch(err => {
             Swal.fire({
@@ -94,6 +94,14 @@
       formatDate: function (date) {
         let registered = new Date(date);
         return registered.toLocaleString('es-ES');
+      },
+      getFoto: function (idPersona) {
+        axios
+        .get(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`)
+          .then(response => {
+             return this.img = `${process.env.VUE_APP_ROOT_PICS}/response.data.persona.image}`
+          })
+          .catch(error => alert(error))
       }
     },
     mounted() {
@@ -107,3 +115,18 @@
     }
   }
 </script>
+
+<style>
+  .bottom-gradient {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 72px);
+  }
+
+  .repeating-gradient {
+    background-image: repeating-linear-gradient(-45deg,
+                        rgba(255,0,0,.25),
+                        rgba(255,0,0,.25) 5px,
+                        rgba(0,0,255,.25) 5px,
+                        rgba(0,0,255,.25) 10px
+                      );
+  }
+</style>

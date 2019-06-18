@@ -45,6 +45,11 @@ export default [{
     view: 'FormPersona'
   },
   {
+    path: '/persona-new',
+    name: 'Crear Persona',
+    view: 'FormPersonaNew'
+  },
+  {
     path: '/visita-form',
     name: 'Registrar Visita',
     view: 'FormVisita'
