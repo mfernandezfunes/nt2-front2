@@ -48,11 +48,11 @@
 </template>
 
 <script>
-    import {
-        WebCam
-    } from "vue-web-cam";
+    import { WebCam } from "vue-web-cam";
+    
     import axios from "axios";
     import Swal from 'sweetalert2';
+ 
     export default {
         name: "App",
         components: {

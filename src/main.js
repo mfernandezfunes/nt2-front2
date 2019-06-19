@@ -19,6 +19,9 @@ import store from '@/store'
 
 import Swal from 'sweetalert2'
 import axios from "axios";
+import VueQrcodeReader from "vue-qrcode-reader";
+ 
+
 
 // Sync store with router
 sync(store, router)
@@ -32,6 +35,7 @@ new Vue({
   i18n,
   router,
   store,
+  VueQrcodeReader,
   Swal,
   render: h => h(App)
 }).$mount('#app')

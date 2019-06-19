@@ -55,6 +55,11 @@ export default [{
     view: 'FormVisita'
   },
   {
+    path: '/lector-qr',
+    name: 'Lectura de QR',
+    view: 'WebCamQR'
+  },
+  {
     path: '/visitaListar',
     name: 'Listar Visitas',
     view: 'ListaVisitas'

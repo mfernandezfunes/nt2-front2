@@ -43,6 +43,11 @@
           text: 'Panel de Control'
         },
         {
+          to: '/lector-qr',
+          icon: 'mdi-qrcode',
+          text: 'Lectura de QR'
+        },
+        {
           to: '/lista-empresas',
           icon: 'mdi-domain',
           text: 'Empresas'
