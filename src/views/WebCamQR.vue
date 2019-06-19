@@ -1,39 +1,37 @@
 <template>
     <div class="container">
         <v-layout justify-center wrap>
-            <div>
-                <p>
-                    Funcion de Trackeo:
-                    <select v-model="selected">
-                        <option v-for="option in options" :value="option">
-                            {{ option.text }}
-                        </option>
-                    </select>
-                </p>
+            <v-flex md12>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <v-flex xs12 md12>
+                                <qrcode-stream @decode="onDecode" @init="onInit" />
+                            </v-flex>
+                            <v-flex xs12 md12>
+                                <v-toolbar dense>
 
-                <p class="decode-result">
-                    Resultado leido del QR: <b>{{ result }}</b>
-                </p>
-                <qrcode-stream :track="paintBlueDots" @decode="onDecode" @init="onInit" />
-            </div>
+                                    <h3><a v-bind:href=result>{{ result }}</a></h3>
+
+                                </v-toolbar>
+                            </v-flex>
+                        </div>
+                    </div>
+                </div>
+            </v-flex>
         </v-layout>
     </div>
 </template>
 
 <script>
     import {
-        QrcodeStream,
-        QrcodeDropZone,
-        QrcodeCapture
+        QrcodeStream
     } from 'vue-qrcode-reader';
-
     import axios from "axios";
 
     export default {
         components: {
             QrcodeStream,
-            QrcodeDropZone,
-            QrcodeCapture
         },
         data() {
             return {
@@ -69,8 +67,6 @@
                     ctx.fillRect(x - 5, y - 5, 10, 10)
                 })
             },
-
-
             async onInit(promise) {
                 try {
                     await promise

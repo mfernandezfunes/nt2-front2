@@ -24,16 +24,20 @@
                 <v-flex xs12 md4>
                   <v-text-field v-model="form.apellido" label="Apellido" class="purple-input" disabled />
                 </v-flex>
+                <v-flex xs12 md4>
+                  <v-text-field v-model="form.numeroTarjeta" label="Numero de Tarjeta" class="purple-input" />
+                </v-flex>
                 <v-flex xs12 md12>
-                  <v-textarea solo name="input-7-4" label="Observaciones" value="">
+                  <v-textarea v-model="form.observaciones" label="Observaciones" value="">
                   </v-textarea>
                 </v-flex>
                 <v-flex xs12 md12>
                   <h3 class="font-weight-light mb-4">EMPRESA QUE VA A VISITAR</h3>
+                  <v-text-field v-model="form.idEmpresa" label="empresa" class="purple-input" />
                 </v-flex>
                 <v-flex xs12 md12>
-                  <v-select label="Seleccione la Empresa" :items=empresasSelect :hint="`${empresaId.title}, ${empresaId.value}`"
-                    v-model="empresaId" item-text="title" item-value="value" persistent-hint >
+                  <v-select label="Seleccione la Empresa" :items=empresasSelect v-model="empresaId" item-text="title"
+                    item-value="id" return-object persistent-hint>
                   </v-select>
                 </v-flex>
 
@@ -44,7 +48,7 @@
                 </v-flex>
 
                 <v-flex xs12 md6 text-xs-right>
-                  <v-btn class="mx-0 font-weight-light" @click="registrarVisita(form)" color="info">
+                  <v-btn class="mx-0 font-weight-light" @click="crearVisita(form)" color="info">
                     REGISTRAR INGRESO
                   </v-btn>
 
@@ -89,19 +93,16 @@
         form: {},
         personaId: null,
         empresaId: {
-          title: '',
-          value: ''
+          id: '',
+          title: ''
         },
-
         empresas: [],
-        empresasSelect: [],
-
+        empresasSelect: []
       }
     },
     mounted() {
 
       this.personaId = this.$route.query.id
-
       console.log(this.$route.query.id)
       if (this.personaId != null) {
         axios
@@ -121,7 +122,6 @@
           })
           .catch(error => alert(error))
       }
-
     },
 
     methods: {
@@ -130,30 +130,50 @@
           this.$router.go(-1) :
           this.$router.push('/')
       },
-      actualizarPersona: function (persona) {
-        axios
-          .put(`${process.env.VUE_APP_ROOT_API}/persona/${this.personaId}`, persona)
-          .then(response => {
-            Swal.fire({
-              type: 'success',
-              title: 'Se ha actualizado',
-              showConfirmButton: false,
-              timer: 1500
+      crearVisita: function (form) {
+        let visita = {
+          idPersona: this.personaId,
+          idEmpresa: form.idEmpresa,
+          observaciones: form.observaciones,
+          numeroTarjeta: form.numeroTarjeta,
+        }
+        if (this.validarVisita(visita)) {
+          axios
+            .post(`${process.env.VUE_APP_ROOT_API}/visita`, visita)
+            .then(response => {
+              Swal.fire({
+                type: 'success',
+                title: 'Se ha ingresado la Visita',
+                showConfirmButton: false,
+                timer: 1500,
+                footer: `${response.data.request} `
+              })
+              
             })
-            goBack()
+            .catch(err => {
+              Swal.fire({
+            type: 'warning',
+            title: 'Se han omitido datos',
+            showConfirmButton: false,
+            timer: 1500
           })
-          .catch(err => {
-            Swal.fire({
-              type: 'error',
-              title: 'Oops...',
-              text: 'Algo salio mal!',
-              footer: err
             })
+
+        } else {
+          Swal.fire({
+            type: 'warning',
+            title: 'Se han omitido datos',
+            showConfirmButton: false,
+            timer: 1500
           })
+        }
+      },
+      validarVisita(visita) {
+        return !((visita.idPersona == '') || (visita.idEmpresa == '') || (visita.id == '') || (visita.idEmpresa == ''))
       },
       generarSelect: function () {
         for (const empresa of this.empresas) {
-          this.empresasSelect.push(`{title:'${empresa.nombre}',value:'${empresa._id}'}`)
+          this.empresasSelect.push(`{id:'${empresa._id}', title:'${empresa.nombre}'}`)
         }
       },
       formatDate(date) {

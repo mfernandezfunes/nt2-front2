@@ -45,7 +45,7 @@
                 <v-btn color="success" @click="editarPersona(item)" small round>
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-btn color="danger" @click="eliminarPersona(item)" small round disabled>
+                <v-btn color="danger" @click="eliminarPersona(item)" small round >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
                 <v-btn color="info" @click="tomarFoto(item)" small round>
@@ -117,11 +117,13 @@
         })
       },
       eliminarPersona: function (item) {
-        Swal.fire(
-          'Good job!',
-          'You clicked the button!',
-          'success'
-        )
+        Swal.fire({
+          type: 'info',
+          title: 'Oops...',
+          text: 'Esta funcionalidad es disponible solo para administradores',
+          footer: 'USUARIO NO ADMINISTRADOR'
+        })
+      
       },
       tomarFoto: function (persona) {
         this.$router.push({

@@ -44,7 +44,6 @@
   import Swal from 'sweetalert2';
   export default {
     data: () => ({
-
       headers: [{
           sortable: false,
           text: 'ID Persona',

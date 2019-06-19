@@ -17,11 +17,10 @@
             </v-card-title>
           </v-card>
 
-          <v-data-table :headers="headers" :items="items" :search="search" 
-          rows-per-page-text="Registros por página:" 
-          no-results-text="No se han encontrado registros coincidentes">
-            
-          <template slot="headerCell" slot-scope="{ header }">
+          <v-data-table :headers="headers" :items="items" :search="search" rows-per-page-text="Registros por página:"
+            no-results-text="No se han encontrado registros coincidentes">
+
+            <template slot="headerCell" slot-scope="{ header }">
               <span class="subheading font-weight-light text-success text--darken-3" v-text="header.text" />
             </template>
 
@@ -43,7 +42,7 @@
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
 
-                <v-btn color="danger" @click="eliminarEmpresa(item)" small round disabled>
+                <v-btn color="danger" @click="eliminarEmpresa(item)" small round>
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
 
@@ -98,22 +97,29 @@
     }),
 
     computed: {
-      
+
     },
     methods: {
       editarEmpresa: function (item) {
-        alert(`EMPRESA A EDITAR idObjeto: ${item._id}`)
+        Swal.fire({
+          type: 'info',
+          title: 'Oops...',
+          text: 'Esta funcionalidad es disponible solo para administradores',
+          footer: 'USUARIO NO ADMINISTRADOR'
+        })
       },
-      cambiarEstado(item){
+      cambiarEstado(item) {
         console.log(item.cuit + item.activa + item._id)
         axios
-        .put(`${process.env.VUE_APP_ROOT_API}/empresa/${item._id}`, {"activa":item.activa} )
+          .put(`${process.env.VUE_APP_ROOT_API}/empresa/${item._id}`, {
+            "activa": item.activa
+          })
           .then(response => {
-              Swal.fire({
-                type: 'success',
-                title: `Se ha cambiado el estado de ${item.cuit} `,
-                showConfirmButton: true
-              })
+            Swal.fire({
+              type: 'success',
+              title: `Se ha cambiado el estado de ${item.cuit} `,
+              showConfirmButton: true
+            })
           })
           .catch(err => {
             Swal.fire({
@@ -126,10 +132,10 @@
       },
       eliminarEmpresa: function (item) {
         Swal.fire({
-          title: 'Error!',
-          text: 'Do you want to continue',
-          type: 'error',
-          confirmButtonText: 'Cool'
+          type: 'info',
+          title: 'Oops...',
+          text: 'Esta funcionalidad es disponible solo para administradores',
+          footer: 'USUARIO NO ADMINISTRADOR'
         })
       }
     },
