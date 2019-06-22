@@ -8,7 +8,7 @@
             <v-layout row wrap>
               <v-flex v-for="item in items" :key="item.title" v-bind="{ [`xs3`]: true }">
                 <v-card>
-                  <v-img src="http://localhost:3700/static/web-6adce4d7.jpg" height="150px">
+                  <v-img src="http://localhost:3700/static/YWRFVinKY2bdkHU2894LJ2Il.jpg" height="150px">
                     <div class="fill-height bottom-gradient"></div>
               
                   </v-img>
